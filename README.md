@@ -1,2 +1,78 @@
-# usb-digital-signing
-This system is designed for environments that require secure device enrollment, such as industrial control systems, secure boot chains, and access control scenarios.
+# USB Certificate Generator
+
+A lightweight C-based tool for securely provisioning USB storage devices with embedded X.509 certificates. The system generates a certificate signed by an internal Certificate Authority (CA) and embeds it into a reserved partition on the USB.
+
+This project is designed for environments requiring trusted device authentication, such as industrial systems, secure boot chains, and hardware access control.
+
+---
+
+## ✨ Features
+
+- Extract USB identifiers (Serial Number, VendorID, ProductID)
+- Generate X.509 certificates using OpenSSL
+- Sign certificates with an internal CA
+- Embed certificates into reserved USB partitions
+- Modular, maintainable C codebase
+
+---
+
+## 📂 Directory Structure
+
+```
+usb-cert-generator/
+├── cert/               # CA private/public keys (ca.key, ca.crt)
+├── output/             # Generated keys and certificates
+├── src/                # C source code files
+│   ├── main.c
+│   ├── usb_info.c/h
+│   ├── cert_gen.c/h
+│   └── embed_cert.c/h
+├── Makefile
+└── README.md
+```
+
+---
+
+## 🚀 Quick Start
+
+### 1. Generate your internal CA (if not available)
+```bash
+mkdir cert
+cd cert
+openssl genrsa -out ca.key 2048
+openssl req -x509 -new -nodes -key ca.key -sha256 -days 3650 -out ca.crt
+```
+
+### 2. Build the tool
+```bash
+cd src
+make
+```
+
+### 3. Run the tool (replace `/dev/sdX` and `/dev/sdX1` with your USB device paths)
+```bash
+sudo ./usb_cert_generator
+```
+
+> ⚠️ This tool writes to your USB. Make sure to select the correct device to avoid data loss.
+
+---
+
+## 📌 Requirements
+
+- Linux environment
+- `gcc` compiler
+- `openssl` CLI tools
+- `udevadm` utility
+
+---
+
+## 📜 License
+
+MIT License
+
+---
+
+## 🤝 Contributing
+
+Pull requests are welcome! For significant changes, please open an issue first to discuss the improvements.
