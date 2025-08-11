@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "dbus.h": "c",
-        "usbguard_interface.h": "c"
+        "usbguard_interface.h": "c",
+        "ctype.h": "c",
+        "cert_gen.h": "c"
     }
 }

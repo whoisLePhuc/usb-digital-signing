@@ -20,18 +20,27 @@ This project is designed for environments requiring trusted device authenticatio
 
 ```
     usb-cert-generator/
-    ├── cert/               # CA private/public keys (ca.key, ca.crt)
+    ├── cert/                         # Chứa chứng chỉ CA
+	│   ├── ca.crt                    # CA certificate (public)
+	│   └── ca.key                    # CA private key (secret)
+    │
     ├── output/             # Generated keys and certificates
+	│   ├── usb.key
+	│   ├── usb.csr
+	│   └── usb_cert.pem              # Chứng chỉ USB được tạo
+    │
     ├── src/                # C source code files
-    │   ├── usb_info.c
-    │   ├── cert_gen.c
-    │   ├── usbguard_interface.c
-    │   └── embed_cert.c
+    │   ├── usb_info.c      # Lấy thông tin USB
+    │   ├── cert_gen.c      # Sinh chứng chỉ bằng openssl
+    │   ├── usbguard_interface.c  # Giao tiếp với USBguard 
+    │   └── embed_cert.c    # Nhúng cert vào USB
+    │
     ├── inc/                # C source code files
     │   ├── usb_info.h
     │   ├── cert_gen.h
     │   ├── usbguard_interface.h
     │   └── embed_cert.h
+    │
     ├── main.c
     ├── Makefile
     └── README.md

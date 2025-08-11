@@ -11,9 +11,10 @@ typedef struct {
 } UsbDeviceList;
 
 // Lấy danh sách thiết bị từ USBGuard (filter: "match", "allow", "block")
+// Trả về con trỏ đến UsbDeviceList (caller responsible to free via usbguard_free_device_list).
 UsbDeviceList *usbguard_list_devices(const char *query);
 
 // Giải phóng danh sách
 void usbguard_free_device_list(UsbDeviceList *list);
 
-#endif
+#endif // USBGUARD_INTERFACE_H

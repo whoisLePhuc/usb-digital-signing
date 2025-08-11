@@ -25,26 +25,33 @@ void usb_info_free(UsbDeviceInfo *info) {
 }
 
 void usb_info_set_id(UsbDeviceInfo *info, const char *vendor_id, const char *product_id) {
+    if (!info) return;
     free(info->id); // tránh leak memory
     size_t len = strlen(vendor_id) + strlen(product_id) + 2; // +1 cho ':' và +1 cho '\0'
     info->id = malloc(len);
-    snprintf(info->id, len, "%s:%s", vendor_id, product_id);
+    if (info->id)
+        snprintf(info->id, len, "%s:%s", vendor_id, product_id);
 }
 
 void usb_info_set_name(UsbDeviceInfo *info, const char *name) {
+    if (!info) return;
     free(info->name);
-    info->name = strdup(name);
+    info->name = name ? strdup(name) : NULL;
 }
 
 void usb_info_set_serial(UsbDeviceInfo *info, const char *serial) {
+    if (!info) return;
     free(info->serial);
-    info->serial = strdup(serial);
+    info->serial = serial ? strdup(serial) : NULL;
 }
 
 void usb_info_add_property(UsbDeviceInfo *info, const char *key, const char *value) {
-    info->properties = realloc(info->properties, (info->property_count + 1) * sizeof(UsbProperty));
+    if (!info || !key) return;
+    UsbProperty *tmp = realloc(info->properties, (info->property_count + 1) * sizeof(UsbProperty));
+    if (!tmp) return;
+    info->properties = tmp;
     info->properties[info->property_count].key = strdup(key);
-    info->properties[info->property_count].value = strdup(value);
+    info->properties[info->property_count].value = value ? strdup(value) : strdup("");
     info->property_count++;
 }
 
@@ -60,4 +67,14 @@ void usb_info_print(const UsbDeviceInfo *info) {
     for (size_t i = 0; i < info->property_count; i++) {
         printf("    %s: %s\n", info->properties[i].key, info->properties[i].value);
     }
+}
+
+const char *usb_info_get_property(const UsbDeviceInfo *info, const char *key) {
+    if (!info || !key) return NULL;
+    for (size_t i = 0; i < info->property_count; i++) {
+        if (info->properties[i].key && strcmp(info->properties[i].key, key) == 0) {
+            return info->properties[i].value;
+        }
+    }
+    return NULL;
 }

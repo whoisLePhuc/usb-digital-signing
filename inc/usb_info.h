@@ -11,7 +11,7 @@ typedef struct {
 
 // Struct chứa toàn bộ thông tin thiết bị USB
 typedef struct {
-    char *id;             // VendorID:ProductID
+    char *id;             // VendorID:ProductID (ví dụ "1d6b:0002")
     char *name;           // Tên thiết bị
     char *serial;         // Serial number
     size_t property_count;
@@ -31,4 +31,7 @@ void usb_info_add_property(UsbDeviceInfo *info, const char *key, const char *val
 // Hàm debug / in thông tin
 void usb_info_print(const UsbDeviceInfo *info);
 
-#endif
+// Helper: lấy property theo key (trả NULL nếu không tồn tại)
+const char *usb_info_get_property(const UsbDeviceInfo *info, const char *key);
+
+#endif // USB_INFO_H
