@@ -19,16 +19,22 @@ This project is designed for environments requiring trusted device authenticatio
 ## 📂 Directory Structure
 
 ```
-usb-cert-generator/
-├── cert/               # CA private/public keys (ca.key, ca.crt)
-├── output/             # Generated keys and certificates
-├── src/                # C source code files
-│   ├── main.c
-│   ├── usb_info.c/h
-│   ├── cert_gen.c/h
-│   └── embed_cert.c/h
-├── Makefile
-└── README.md
+    usb-cert-generator/
+    ├── cert/               # CA private/public keys (ca.key, ca.crt)
+    ├── output/             # Generated keys and certificates
+    ├── src/                # C source code files
+    │   ├── usb_info.c
+    │   ├── cert_gen.c
+    │   ├── usbguard_interface.c
+    │   └── embed_cert.c
+    ├── inc/                # C source code files
+    │   ├── usb_info.h
+    │   ├── cert_gen.h
+    │   ├── usbguard_interface.h
+    │   └── embed_cert.h
+    ├── main.c
+    ├── Makefile
+    └── README.md
 ```
 
 ---

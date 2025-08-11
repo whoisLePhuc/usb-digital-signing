@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "dbus.h": "c",
+        "usbguard_interface.h": "c"
+    }
+}
