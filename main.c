@@ -1,19 +1,18 @@
 #include "usb_info.h"
 #include "usbguard_interface.h"
 #include "cert_gen.h"
+#include "embed_cert.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
 
+#define USB_SCRIPT_PATH "usbPartition.sh"
+#define USB_SIGNATURE_PATH "output/usb_cert.pem"
+#define USB_DEVICE "/dev/sdb"
+
 int main() {
-    int ret = system("sudo src/scripts/usbPartition.sh /dev/sdb");
-    if (ret != 0) {
-        printf("Lỗi khi chạy script phân vùng USB!\n");
-        return 1;
-    }
-    printf("Phân vùng USB thành công!\n");
-    return 0;
+    embed_cert(USB_SCRIPT_PATH, USB_DEVICE, USB_SIGNATURE_PATH);
 }
 
 
